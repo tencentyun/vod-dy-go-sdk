@@ -31,6 +31,9 @@ type DeleteMediaForDYRequest struct {
 
 	// 文件的 COS 完整路径。
 	ObjectSet []*string `json:"ObjectSet,omitempty" name:"ObjectSet"`
+
+	// 来源上下文，用于透传用户请求信息，删除回调将返回该字段值，最长 1000 个字符。
+	SessionContext *string `json:"SessionContext,omitempty" name:"SessionContext"`
 }
 
 func (r *DeleteMediaForDYRequest) ToJsonString() string {
@@ -48,6 +51,7 @@ func (r *DeleteMediaForDYRequest) FromJsonString(s string) error {
 	delete(f, "CosBucket")
 	delete(f, "CosRegion")
 	delete(f, "ObjectSet")
+	delete(f, "SessionContext")
 	if len(f) > 0 {
 		return tcerr.NewTencentCloudSDKError("ClientError.BuildRequestError", "DeleteMediaForDYRequest has unknown keys!", "")
 	}
