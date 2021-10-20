@@ -77,3 +77,65 @@ func (r *DeleteMediaForDYResponse) ToJsonString() string {
 func (r *DeleteMediaForDYResponse) FromJsonString(s string) error {
 	return json.Unmarshal([]byte(s), &r)
 }
+
+type RestoreMediaForDYRequest struct {
+	*tchttp.BaseRequest
+
+	// 文件所在的 COS Bucket 名，如 xxx-bucket。
+	CosBucket *string `json:"CosBucket,omitempty" name:"CosBucket"`
+
+	// 文件所在的 COS Bucket 所属园区，如 ap-chongqing。
+	CosRegion *string `json:"CosRegion,omitempty" name:"CosRegion"`
+
+	// 文件的 COS 完整路径。
+	Object *string `json:"Object,omitempty" name:"Object"`
+
+	// 解冻出的临时媒体文件的可访问持续时长，单位为“天”。
+	RestoreDay *uint64 `json:"RestoreDay,omitempty" name:"RestoreDay"`
+
+	// 来源上下文，用于透传用户请求信息，最长 1000 个字符。
+	SourceContext *string `json:"SourceContext,omitempty" name:"SourceContext"`
+}
+
+func (r *RestoreMediaForDYRequest) ToJsonString() string {
+    b, _ := json.Marshal(r)
+    return string(b)
+}
+
+// FromJsonString It is highly **NOT** recommended to use this function
+// because it has no param check, nor strict type check
+func (r *RestoreMediaForDYRequest) FromJsonString(s string) error {
+	f := make(map[string]interface{})
+	if err := json.Unmarshal([]byte(s), &f); err != nil {
+		return err
+	}
+	delete(f, "CosBucket")
+	delete(f, "CosRegion")
+	delete(f, "Object")
+	delete(f, "RestoreDay")
+	delete(f, "SourceContext")
+	if len(f) > 0 {
+		return tcerr.NewTencentCloudSDKError("ClientError.BuildRequestError", "RestoreMediaForDYRequest has unknown keys!", "")
+	}
+	return json.Unmarshal([]byte(s), &r)
+}
+
+type RestoreMediaForDYResponse struct {
+	*tchttp.BaseResponse
+	Response *struct {
+
+		// 唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 RequestId。
+		RequestId *string `json:"RequestId,omitempty" name:"RequestId"`
+	} `json:"Response"`
+}
+
+func (r *RestoreMediaForDYResponse) ToJsonString() string {
+    b, _ := json.Marshal(r)
+    return string(b)
+}
+
+// FromJsonString It is highly **NOT** recommended to use this function
+// because it has no param check, nor strict type check
+func (r *RestoreMediaForDYResponse) FromJsonString(s string) error {
+	return json.Unmarshal([]byte(s), &r)
+}

@@ -76,3 +76,43 @@ func (c *Client) DeleteMediaForDY(request *DeleteMediaForDYRequest) (response *D
     err = c.Send(request, response)
     return
 }
+
+func NewRestoreMediaForDYRequest() (request *RestoreMediaForDYRequest) {
+    request = &RestoreMediaForDYRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("vod", APIVersion, "RestoreMediaForDY")
+    return
+}
+
+func NewRestoreMediaForDYResponse() (response *RestoreMediaForDYResponse) {
+    response = &RestoreMediaForDYResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// RestoreMediaForDY
+// 当媒体文件的存储类型是归档存储或深度归档存储时，是不可访问的。如需访问，则需要调用本接口进行解冻，解冻后可访问的媒体文件是临时的，在有效期过后，则不可访问。
+//
+// 可能返回的错误码:
+//  FAILEDOPERATION = "FailedOperation"
+//  INTERNALERROR = "InternalError"
+//  INVALIDPARAMETER = "InvalidParameter"
+//  INVALIDPARAMETERVALUE = "InvalidParameterValue"
+//  INVALIDPARAMETERVALUE_NOTRESTORABLE = "InvalidParameterValue.NotRestorable"
+//  INVALIDPARAMETERVALUE_RESTOREDAY = "InvalidParameterValue.RestoreDay"
+//  RESOURCENOTFOUND = "ResourceNotFound"
+//  RESOURCENOTFOUND_FILENOTEXIST = "ResourceNotFound.FileNotExist"
+//  RESOURCEUNAVAILABLE = "ResourceUnavailable"
+//  UNAUTHORIZEDOPERATION = "UnauthorizedOperation"
+//  UNKNOWNPARAMETER = "UnknownParameter"
+//  UNSUPPORTEDOPERATION = "UnsupportedOperation"
+func (c *Client) RestoreMediaForDY(request *RestoreMediaForDYRequest) (response *RestoreMediaForDYResponse, err error) {
+    if request == nil {
+        request = NewRestoreMediaForDYRequest()
+    }
+    response = NewRestoreMediaForDYResponse()
+    err = c.Send(request, response)
+    return
+}
