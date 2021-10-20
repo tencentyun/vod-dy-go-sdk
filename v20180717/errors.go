@@ -26,12 +26,33 @@ const (
 	// 内部错误。
 	INTERNALERROR = "InternalError"
 
+	// 参数错误。
+	INVALIDPARAMETER = "InvalidParameter"
+
 	// 参数取值错误。
 	INVALIDPARAMETERVALUE = "InvalidParameterValue"
+
+	// 参数错误：文件不支持解冻。
+	INVALIDPARAMETERVALUE_NOTRESTORABLE = "InvalidParameterValue.NotRestorable"
+
+	// 参数错误：解冻天数错误。
+	INVALIDPARAMETERVALUE_RESTOREDAY = "InvalidParameterValue.RestoreDay"
 
 	// 资源不存在。
 	RESOURCENOTFOUND = "ResourceNotFound"
 
+	// 资源不存在：文件不存在。
+	RESOURCENOTFOUND_FILENOTEXIST = "ResourceNotFound.FileNotExist"
+
+	// 资源不可用。
+	RESOURCEUNAVAILABLE = "ResourceUnavailable"
+
 	// 未授权操作。
 	UNAUTHORIZEDOPERATION = "UnauthorizedOperation"
+
+	// 未知参数错误。
+	UNKNOWNPARAMETER = "UnknownParameter"
+
+	// 操作不支持。
+	UNSUPPORTEDOPERATION = "UnsupportedOperation"
 )
