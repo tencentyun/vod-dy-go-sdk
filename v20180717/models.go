@@ -81,7 +81,7 @@ func (r *DeleteMediaForDYResponse) FromJsonString(s string) error {
 type RestoreMediaForDYRequest struct {
 	*tchttp.BaseRequest
 
-	// 文件所在的 COS Bucket 名，如 xxx-bucket。
+	// 文件所在的 COS Bucket 名，如 bucket-xxx。
 	CosBucket *string `json:"CosBucket,omitempty" name:"CosBucket"`
 
 	// 文件所在的 COS Bucket 所属园区，如 ap-chongqing。
@@ -90,7 +90,7 @@ type RestoreMediaForDYRequest struct {
 	// 文件的 COS 完整路径。
 	Object *string `json:"Object,omitempty" name:"Object"`
 
-	// 解冻出的临时媒体文件的可访问持续时长，单位为“天”。
+	// 解冻出的临时媒体文件的可访问持续时长，单位为“天”。默认为1天。
 	RestoreDay *uint64 `json:"RestoreDay,omitempty" name:"RestoreDay"`
 
 	// 来源上下文，用于透传用户请求信息，最长 1000 个字符。
