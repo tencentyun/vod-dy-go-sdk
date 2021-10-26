@@ -77,6 +77,95 @@ func (c *Client) DeleteMediaForDY(request *DeleteMediaForDYRequest) (response *D
     return
 }
 
+func NewEditMediaForDYRequest() (request *EditMediaForDYRequest) {
+    request = &EditMediaForDYRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("vod", APIVersion, "EditMediaForDY")
+    return
+}
+
+func NewEditMediaForDYResponse() (response *EditMediaForDYResponse) {
+    response = &EditMediaForDYResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// EditMediaForDY
+// 对视频进行编辑（剪辑、拼接等），生成一个新的点播视频。编辑的功能包括：
+//
+// 
+//
+// 1. 对一个文件进行剪辑，生成一个新的视频；
+//
+// 2. 对多个文件进行拼接，生成一个新的视频；
+//
+// 3. 对多个文件进行剪辑，然后再拼接，生成一个新的视频。
+//
+// 可能返回的错误码:
+//  INTERNALERROR = "InternalError"
+//  INVALIDPARAMETER = "InvalidParameter"
+func (c *Client) EditMediaForDY(request *EditMediaForDYRequest) (response *EditMediaForDYResponse, err error) {
+    if request == nil {
+        request = NewEditMediaForDYRequest()
+    }
+    response = NewEditMediaForDYResponse()
+    err = c.Send(request, response)
+    return
+}
+
+func NewProcessMediaForDYRequest() (request *ProcessMediaForDYRequest) {
+    request = &ProcessMediaForDYRequest{
+        BaseRequest: &tchttp.BaseRequest{},
+    }
+    request.Init().WithApiInfo("vod", APIVersion, "ProcessMediaForDY")
+    return
+}
+
+func NewProcessMediaForDYResponse() (response *ProcessMediaForDYResponse) {
+    response = &ProcessMediaForDYResponse{
+        BaseResponse: &tchttp.BaseResponse{},
+    }
+    return
+}
+
+// ProcessMediaForDY
+// 对 COS 中的媒体文件发起处理任务，功能包括：
+//
+// 1. 视频转码（带水印）；
+//
+// 2. 视频转动图；
+//
+// 3. 对视频按指定时间点截图；
+//
+// 4. 对视频采样截图；
+//
+// 5. 对视频截图雪碧图；
+//
+// 6. 对视频转自适应码流；
+//
+// 7. 智能内容审核（鉴黄、鉴恐、鉴政）；
+//
+// 8. 智能内容分析（标签、分类、封面、按帧标签）；
+//
+// 9. 智能内容识别（人脸、文本全文、文本关键词、语音全文、语音关键词）。
+//
+// 可能返回的错误码:
+//  INTERNALERROR = "InternalError"
+//  INVALIDPARAMETER = "InvalidParameter"
+//  INVALIDPARAMETERVALUE_SESSIONCONTEXTTOOLONG = "InvalidParameterValue.SessionContextTooLong"
+//  INVALIDPARAMETERVALUE_SESSIONID = "InvalidParameterValue.SessionId"
+//  INVALIDPARAMETERVALUE_SESSIONIDTOOLONG = "InvalidParameterValue.SessionIdTooLong"
+func (c *Client) ProcessMediaForDY(request *ProcessMediaForDYRequest) (response *ProcessMediaForDYResponse, err error) {
+    if request == nil {
+        request = NewProcessMediaForDYRequest()
+    }
+    response = NewProcessMediaForDYResponse()
+    err = c.Send(request, response)
+    return
+}
+
 func NewRestoreMediaForDYRequest() (request *RestoreMediaForDYRequest) {
     request = &RestoreMediaForDYRequest{
         BaseRequest: &tchttp.BaseRequest{},

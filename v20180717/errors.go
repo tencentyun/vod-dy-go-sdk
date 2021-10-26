@@ -38,6 +38,15 @@ const (
 	// 参数错误：解冻天数错误。
 	INVALIDPARAMETERVALUE_RESTOREDAY = "InvalidParameterValue.RestoreDay"
 
+	// SessionContext 过长。
+	INVALIDPARAMETERVALUE_SESSIONCONTEXTTOOLONG = "InvalidParameterValue.SessionContextTooLong"
+
+	// 去重识别码重复，请求被去重。
+	INVALIDPARAMETERVALUE_SESSIONID = "InvalidParameterValue.SessionId"
+
+	// SessionId 过长。
+	INVALIDPARAMETERVALUE_SESSIONIDTOOLONG = "InvalidParameterValue.SessionIdTooLong"
+
 	// 资源不存在。
 	RESOURCENOTFOUND = "ResourceNotFound"
 
