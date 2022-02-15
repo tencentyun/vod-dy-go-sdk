@@ -20,6 +20,21 @@ import (
     tchttp "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/http"
 )
 
+type AdaptiveDynamicStreamingInfoItemForDY struct {
+
+	// 转自适应码流规格。
+	Definition *int64 `json:"Definition,omitempty" name:"Definition"`
+
+	// 打包格式，可能为 HLS和 MPEG-DASH 两种。
+	Package *string `json:"Package,omitempty" name:"Package"`
+
+	// 播放路径。
+	Path *string `json:"Path,omitempty" name:"Path"`
+
+	// 自适应码流文件的存储位置。
+	Storage *TaskOutputStorageForDY `json:"Storage,omitempty" name:"Storage"`
+}
+
 type AdaptiveDynamicStreamingTaskInputForDY struct {
 
 	// 转自适应码流模板 ID。
@@ -140,6 +155,142 @@ func (r *DeleteMediaForDYResponse) FromJsonString(s string) error {
 	return json.Unmarshal([]byte(s), &r)
 }
 
+type DescribeMediaMetaDataForDYRequest struct {
+	*tchttp.BaseRequest
+
+	// 需要获取元信息的文件输入信息。
+	InputInfo *MediaInputInfoForDY `json:"InputInfo,omitempty" name:"InputInfo"`
+}
+
+func (r *DescribeMediaMetaDataForDYRequest) ToJsonString() string {
+    b, _ := json.Marshal(r)
+    return string(b)
+}
+
+// FromJsonString It is highly **NOT** recommended to use this function
+// because it has no param check, nor strict type check
+func (r *DescribeMediaMetaDataForDYRequest) FromJsonString(s string) error {
+	f := make(map[string]interface{})
+	if err := json.Unmarshal([]byte(s), &f); err != nil {
+		return err
+	}
+	delete(f, "InputInfo")
+	if len(f) > 0 {
+		return tcerr.NewTencentCloudSDKError("ClientError.BuildRequestError", "DescribeMediaMetaDataForDYRequest has unknown keys!", "")
+	}
+	return json.Unmarshal([]byte(s), &r)
+}
+
+type DescribeMediaMetaDataForDYResponse struct {
+	*tchttp.BaseResponse
+	Response *struct {
+
+		// 媒体元信息。
+		MetaData *MediaMetaDataForDY `json:"MetaData,omitempty" name:"MetaData"`
+
+		// 唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 RequestId。
+		RequestId *string `json:"RequestId,omitempty" name:"RequestId"`
+	} `json:"Response"`
+}
+
+func (r *DescribeMediaMetaDataForDYResponse) ToJsonString() string {
+    b, _ := json.Marshal(r)
+    return string(b)
+}
+
+// FromJsonString It is highly **NOT** recommended to use this function
+// because it has no param check, nor strict type check
+func (r *DescribeMediaMetaDataForDYResponse) FromJsonString(s string) error {
+	return json.Unmarshal([]byte(s), &r)
+}
+
+type DescribeTaskDetailForDYRequest struct {
+	*tchttp.BaseRequest
+
+	// 视频处理任务的任务 ID。
+	TaskId *string `json:"TaskId,omitempty" name:"TaskId"`
+}
+
+func (r *DescribeTaskDetailForDYRequest) ToJsonString() string {
+    b, _ := json.Marshal(r)
+    return string(b)
+}
+
+// FromJsonString It is highly **NOT** recommended to use this function
+// because it has no param check, nor strict type check
+func (r *DescribeTaskDetailForDYRequest) FromJsonString(s string) error {
+	f := make(map[string]interface{})
+	if err := json.Unmarshal([]byte(s), &f); err != nil {
+		return err
+	}
+	delete(f, "TaskId")
+	if len(f) > 0 {
+		return tcerr.NewTencentCloudSDKError("ClientError.BuildRequestError", "DescribeTaskDetailForDYRequest has unknown keys!", "")
+	}
+	return json.Unmarshal([]byte(s), &r)
+}
+
+type DescribeTaskDetailForDYResponse struct {
+	*tchttp.BaseResponse
+	Response *struct {
+
+		// 任务类型，目前取值有：
+	// <li>WorkflowTask：视频工作流处理任务。</li>
+	// <li>EditMediaTask：视频编辑任务。</li>
+	// <li>LiveStreamProcessTask：直播流处理任务。</li>
+		TaskType *string `json:"TaskType,omitempty" name:"TaskType"`
+
+		// 任务状态，取值：
+	// <li>WAITING：等待中；</li>
+	// <li>PROCESSING：处理中；</li>
+	// <li>FINISH：已完成。</li>
+		Status *string `json:"Status,omitempty" name:"Status"`
+
+		// 任务的创建时间，采用 [ISO 日期格式](https://cloud.tencent.com/document/product/862/37710#52)。
+		CreateTime *string `json:"CreateTime,omitempty" name:"CreateTime"`
+
+		// 任务开始执行的时间，采用 [ISO 日期格式](https://cloud.tencent.com/document/product/862/37710#52)。
+		BeginProcessTime *string `json:"BeginProcessTime,omitempty" name:"BeginProcessTime"`
+
+		// 任务执行完毕的时间，采用 [ISO 日期格式](https://cloud.tencent.com/document/product/862/37710#52)。
+		FinishTime *string `json:"FinishTime,omitempty" name:"FinishTime"`
+
+		// 视频处理任务信息，仅当 TaskType 为 WorkflowTask，该字段有值。
+	// 注意：此字段可能返回 null，表示取不到有效值。
+		WorkflowTask *WorkflowTaskForDY `json:"WorkflowTask,omitempty" name:"WorkflowTask"`
+
+		// 视频编辑任务信息，仅当 TaskType 为 EditMediaTask，该字段有值。
+	// 注意：此字段可能返回 null，表示取不到有效值。
+		EditMediaTask *EditMediaTaskForDY `json:"EditMediaTask,omitempty" name:"EditMediaTask"`
+
+		// 任务流的优先级，取值范围为 [-10, 10]。
+		TasksPriority *int64 `json:"TasksPriority,omitempty" name:"TasksPriority"`
+
+		// 用于去重的识别码，如果七天内曾有过相同的识别码的请求，则本次的请求会返回错误。最长50个字符，不带或者带空字符串表示不做去重。
+		SessionId *string `json:"SessionId,omitempty" name:"SessionId"`
+
+		// 来源上下文，用于透传用户请求信息，任务流状态变更回调将返回该字段值，最长1000个字符。
+		SessionContext *string `json:"SessionContext,omitempty" name:"SessionContext"`
+
+		// 扩展信息字段，仅用于特定场景。
+		ExtInfo *string `json:"ExtInfo,omitempty" name:"ExtInfo"`
+
+		// 唯一请求 ID，每次请求都会返回。定位问题时需要提供该次请求的 RequestId。
+		RequestId *string `json:"RequestId,omitempty" name:"RequestId"`
+	} `json:"Response"`
+}
+
+func (r *DescribeTaskDetailForDYResponse) ToJsonString() string {
+    b, _ := json.Marshal(r)
+    return string(b)
+}
+
+// FromJsonString It is highly **NOT** recommended to use this function
+// because it has no param check, nor strict type check
+func (r *DescribeTaskDetailForDYResponse) FromJsonString(s string) error {
+	return json.Unmarshal([]byte(s), &r)
+}
+
 type EditMediaFileInfoForDY struct {
 
 	// 视频的输入信息。
@@ -231,6 +382,47 @@ type EditMediaOutputConfigForDY struct {
 	Container *string `json:"Container,omitempty" name:"Container"`
 }
 
+type EditMediaTaskForDY struct {
+
+	// 任务 ID。
+	TaskId *string `json:"TaskId,omitempty" name:"TaskId"`
+
+	// 任务状态，取值：
+	// <li>PROCESSING：处理中；</li>
+	// <li>FINISH：已完成。</li>
+	Status *string `json:"Status,omitempty" name:"Status"`
+
+	// 错误码
+	// <li>0：成功；</li>
+	// <li>其他值：失败。</li>
+	ErrCode *int64 `json:"ErrCode,omitempty" name:"ErrCode"`
+
+	// 错误信息。
+	Message *string `json:"Message,omitempty" name:"Message"`
+
+	// 视频编辑任务的输入。
+	Input *EditMediaTaskInputForDY `json:"Input,omitempty" name:"Input"`
+
+	// 视频编辑任务的输出。
+	// 注意：此字段可能返回 null，表示取不到有效值。
+	Output *EditMediaTaskOutputForDY `json:"Output,omitempty" name:"Output"`
+}
+
+type EditMediaTaskInputForDY struct {
+
+	// 输入的视频文件信息。
+	FileInfoSet []*EditMediaFileInfoForDY `json:"FileInfoSet,omitempty" name:"FileInfoSet"`
+}
+
+type EditMediaTaskOutputForDY struct {
+
+	// 编辑后文件的目标存储。
+	OutputStorage *TaskOutputStorageForDY `json:"OutputStorage,omitempty" name:"OutputStorage"`
+
+	// 编辑后的视频文件路径。
+	Path *string `json:"Path,omitempty" name:"Path"`
+}
+
 type ImageSpriteTaskInputForDY struct {
 
 	// 雪碧图模板 ID。
@@ -251,6 +443,78 @@ type ImageSpriteTaskInputForDY struct {
 	ObjectNumberFormat *NumberFormatForDY `json:"ObjectNumberFormat,omitempty" name:"ObjectNumberFormat"`
 }
 
+type MediaAnimatedGraphicsItemForDY struct {
+
+	// 转动图文件的存储位置。
+	Storage *TaskOutputStorageForDY `json:"Storage,omitempty" name:"Storage"`
+
+	// 转动图的文件路径。
+	Path *string `json:"Path,omitempty" name:"Path"`
+
+	// 转动图模板 ID，参见[转动图参数模板](https://cloud.tencent.com/document/product/862/37042#.E9.A2.84.E7.BD.AE.E8.BD.AC.E5.8A.A8.E5.9B.BE.E6.A8.A1.E6.9D.BF)。
+	Definition *int64 `json:"Definition,omitempty" name:"Definition"`
+
+	// 动图格式，如 gif。
+	Container *string `json:"Container,omitempty" name:"Container"`
+
+	// 动图的高度，单位：px。
+	Height *int64 `json:"Height,omitempty" name:"Height"`
+
+	// 动图的宽度，单位：px。
+	Width *int64 `json:"Width,omitempty" name:"Width"`
+
+	// 动图码率，单位：bps。
+	Bitrate *int64 `json:"Bitrate,omitempty" name:"Bitrate"`
+
+	// 动图大小，单位：字节。
+	Size *int64 `json:"Size,omitempty" name:"Size"`
+
+	// 动图的md5值。
+	Md5 *string `json:"Md5,omitempty" name:"Md5"`
+
+	// 动图在视频中的起始时间偏移，单位：秒。
+	StartTimeOffset *float64 `json:"StartTimeOffset,omitempty" name:"StartTimeOffset"`
+
+	// 动图在视频中的结束时间偏移，单位：秒。
+	EndTimeOffset *float64 `json:"EndTimeOffset,omitempty" name:"EndTimeOffset"`
+}
+
+type MediaAudioStreamItemForDY struct {
+
+	// 音频流的码率，单位：bps。
+	Bitrate *int64 `json:"Bitrate,omitempty" name:"Bitrate"`
+
+	// 音频流的采样率，单位：hz。
+	SamplingRate *int64 `json:"SamplingRate,omitempty" name:"SamplingRate"`
+
+	// 音频流的编码格式，例如 aac。
+	Codec *string `json:"Codec,omitempty" name:"Codec"`
+}
+
+type MediaImageSpriteItemForDY struct {
+
+	// 雪碧图规格，参见[雪碧图参数模板](https://cloud.tencent.com/document/product/266/33480#.E9.9B.AA.E7.A2.A7.E5.9B.BE.E6.A8.A1.E6.9D.BF)。
+	Definition *int64 `json:"Definition,omitempty" name:"Definition"`
+
+	// 雪碧图小图的高度。
+	Height *int64 `json:"Height,omitempty" name:"Height"`
+
+	// 雪碧图小图的宽度。
+	Width *int64 `json:"Width,omitempty" name:"Width"`
+
+	// 每一张雪碧图大图里小图的数量。
+	TotalCount *int64 `json:"TotalCount,omitempty" name:"TotalCount"`
+
+	// 每一张雪碧图大图的路径。
+	ImagePathSet []*string `json:"ImagePathSet,omitempty" name:"ImagePathSet"`
+
+	// 雪碧图子图位置与时间关系的 WebVtt 文件路径。WebVtt 文件表明了各个雪碧图小图对应的时间点，以及在雪碧大图里的坐标位置，一般被播放器用于实现预览。
+	WebVttPath *string `json:"WebVttPath,omitempty" name:"WebVttPath"`
+
+	// 雪碧图文件的存储位置。
+	Storage *TaskOutputStorageForDY `json:"Storage,omitempty" name:"Storage"`
+}
+
 type MediaInputInfoForDY struct {
 
 	// 输入来源对象的类型，支持 COS 和 URL 两种。
@@ -258,6 +522,108 @@ type MediaInputInfoForDY struct {
 
 	// 当 Type 为 COS 时有效，则该项为必填，表示视频处理 COS 对象信息。
 	CosInputInfo *CosInputInfoForDY `json:"CosInputInfo,omitempty" name:"CosInputInfo"`
+}
+
+type MediaMetaDataForDY struct {
+
+	// 上传的媒体文件大小（视频为 HLS 时，大小是 m3u8 和 ts 文件大小的总和），单位：字节。
+	Size *int64 `json:"Size,omitempty" name:"Size"`
+
+	// 容器类型，例如 m4a，mp4 等。
+	Container *string `json:"Container,omitempty" name:"Container"`
+
+	// 视频流码率平均值与音频流码率平均值之和，单位：bps。
+	Bitrate *int64 `json:"Bitrate,omitempty" name:"Bitrate"`
+
+	// 视频流高度的最大值，单位：px。
+	Height *int64 `json:"Height,omitempty" name:"Height"`
+
+	// 视频流宽度的最大值，单位：px。
+	Width *int64 `json:"Width,omitempty" name:"Width"`
+
+	// 视频时长，单位：秒。
+	Duration *float64 `json:"Duration,omitempty" name:"Duration"`
+
+	// 视频拍摄时的选择角度，单位：度。
+	Rotate *int64 `json:"Rotate,omitempty" name:"Rotate"`
+
+	// 视频流信息。
+	VideoStreamSet []*MediaVideoStreamItemForDY `json:"VideoStreamSet,omitempty" name:"VideoStreamSet"`
+
+	// 音频流信息。
+	AudioStreamSet []*MediaAudioStreamItemForDY `json:"AudioStreamSet,omitempty" name:"AudioStreamSet"`
+
+	// 视频时长，单位：秒。
+	VideoDuration *float64 `json:"VideoDuration,omitempty" name:"VideoDuration"`
+
+	// 音频时长，单位：秒。
+	AudioDuration *float64 `json:"AudioDuration,omitempty" name:"AudioDuration"`
+}
+
+type MediaProcessTaskAdaptiveDynamicStreamingResultForDY struct {
+
+	// 任务状态，有 PROCESSING，SUCCESS 和 FAIL 三种。
+	Status *string `json:"Status,omitempty" name:"Status"`
+
+	// 错误码，空字符串表示成功，其他值表示失败，取值请参考 [视频处理类错误码](https://cloud.tencent.com/document/product/862/50369#.E8.A7.86.E9.A2.91.E5.A4.84.E7.90.86.E7.B1.BB.E9.94.99.E8.AF.AF.E7.A0.81) 列表。
+	ErrCodeExt *string `json:"ErrCodeExt,omitempty" name:"ErrCodeExt"`
+
+	// 错误码，0 表示成功，其他值表示失败（该字段已不推荐使用，建议使用新的错误码字段 ErrCodeExt）。
+	ErrCode *int64 `json:"ErrCode,omitempty" name:"ErrCode"`
+
+	// 错误信息。
+	Message *string `json:"Message,omitempty" name:"Message"`
+
+	// 对视频转自适应码流任务的输入。
+	Input *AdaptiveDynamicStreamingTaskInputForDY `json:"Input,omitempty" name:"Input"`
+
+	// 对视频转自适应码流任务的输出。
+	// 注意：此字段可能返回 null，表示取不到有效值。
+	Output *AdaptiveDynamicStreamingInfoItemForDY `json:"Output,omitempty" name:"Output"`
+}
+
+type MediaProcessTaskAnimatedGraphicResultForDY struct {
+
+	// 任务状态，有 PROCESSING，SUCCESS 和 FAIL 三种。
+	Status *string `json:"Status,omitempty" name:"Status"`
+
+	// 错误码，空字符串表示成功，其他值表示失败，取值请参考 [视频处理类错误码](https://cloud.tencent.com/document/product/862/50369#.E8.A7.86.E9.A2.91.E5.A4.84.E7.90.86.E7.B1.BB.E9.94.99.E8.AF.AF.E7.A0.81) 列表。
+	ErrCodeExt *string `json:"ErrCodeExt,omitempty" name:"ErrCodeExt"`
+
+	// 错误码，0 表示成功，其他值表示失败（该字段已不推荐使用，建议使用新的错误码字段 ErrCodeExt）。
+	ErrCode *int64 `json:"ErrCode,omitempty" name:"ErrCode"`
+
+	// 错误信息。
+	Message *string `json:"Message,omitempty" name:"Message"`
+
+	// 转动图任务的输入。
+	Input *AnimatedGraphicTaskInputForDY `json:"Input,omitempty" name:"Input"`
+
+	// 转动图任务的输出。
+	// 注意：此字段可能返回 null，表示取不到有效值。
+	Output *MediaAnimatedGraphicsItemForDY `json:"Output,omitempty" name:"Output"`
+}
+
+type MediaProcessTaskImageSpriteResultForDY struct {
+
+	// 任务状态，有 PROCESSING，SUCCESS 和 FAIL 三种。
+	Status *string `json:"Status,omitempty" name:"Status"`
+
+	// 错误码，空字符串表示成功，其他值表示失败，取值请参考 [视频处理类错误码](https://cloud.tencent.com/document/product/862/50369#.E8.A7.86.E9.A2.91.E5.A4.84.E7.90.86.E7.B1.BB.E9.94.99.E8.AF.AF.E7.A0.81) 列表。
+	ErrCodeExt *string `json:"ErrCodeExt,omitempty" name:"ErrCodeExt"`
+
+	// 错误码，0 表示成功，其他值表示失败（该字段已不推荐使用，建议使用新的错误码字段 ErrCodeExt）。
+	ErrCode *int64 `json:"ErrCode,omitempty" name:"ErrCode"`
+
+	// 错误信息。
+	Message *string `json:"Message,omitempty" name:"Message"`
+
+	// 对视频截雪碧图任务的输入。
+	Input *ImageSpriteTaskInputForDY `json:"Input,omitempty" name:"Input"`
+
+	// 对视频截雪碧图任务的输出。
+	// 注意：此字段可能返回 null，表示取不到有效值。
+	Output *MediaImageSpriteItemForDY `json:"Output,omitempty" name:"Output"`
 }
 
 type MediaProcessTaskInputForDY struct {
@@ -279,6 +645,215 @@ type MediaProcessTaskInputForDY struct {
 
 	// 转自适应码流任务列表。
 	AdaptiveDynamicStreamingTaskSet []*AdaptiveDynamicStreamingTaskInputForDY `json:"AdaptiveDynamicStreamingTaskSet,omitempty" name:"AdaptiveDynamicStreamingTaskSet"`
+}
+
+type MediaProcessTaskResultForDY struct {
+
+	// 任务的类型，可以取的值有：
+	// <li>Transcode：转码</li>
+	// <li>AnimatedGraphics：转动图</li>
+	// <li>SnapshotByTimeOffset：时间点截图</li>
+	// <li>SampleSnapshot：采样截图</li>
+	// <li>ImageSprites：雪碧图</li>
+	// <li>CoverBySnapshot：截图做封面</li>
+	// <li>AdaptiveDynamicStreaming：自适应码流</li>
+	Type *string `json:"Type,omitempty" name:"Type"`
+
+	// 视频转码任务的查询结果，当任务类型为 Transcode 时有效。
+	// 注意：此字段可能返回 null，表示取不到有效值。
+	TranscodeTask *MediaProcessTaskTranscodeResultForDY `json:"TranscodeTask,omitempty" name:"TranscodeTask"`
+
+	// 视频转动图任务的查询结果，当任务类型为 AnimatedGraphics 时有效。
+	// 注意：此字段可能返回 null，表示取不到有效值。
+	AnimatedGraphicTask *MediaProcessTaskAnimatedGraphicResultForDY `json:"AnimatedGraphicTask,omitempty" name:"AnimatedGraphicTask"`
+
+	// 对视频按时间点截图任务的查询结果，当任务类型为 SnapshotByTimeOffset 时有效。
+	// 注意：此字段可能返回 null，表示取不到有效值。
+	SnapshotByTimeOffsetTask *MediaProcessTaskSnapshotByTimeOffsetResultForDY `json:"SnapshotByTimeOffsetTask,omitempty" name:"SnapshotByTimeOffsetTask"`
+
+	// 对视频采样截图任务的查询结果，当任务类型为 SampleSnapshot 时有效。
+	// 注意：此字段可能返回 null，表示取不到有效值。
+	SampleSnapshotTask *MediaProcessTaskSampleSnapshotResultForDY `json:"SampleSnapshotTask,omitempty" name:"SampleSnapshotTask"`
+
+	// 对视频截雪碧图任务的查询结果，当任务类型为 ImageSprite 时有效。
+	// 注意：此字段可能返回 null，表示取不到有效值。
+	ImageSpriteTask *MediaProcessTaskImageSpriteResultForDY `json:"ImageSpriteTask,omitempty" name:"ImageSpriteTask"`
+
+	// 转自适应码流任务查询结果，当任务类型为 AdaptiveDynamicStreaming 时有效。
+	// 注意：此字段可能返回 null，表示取不到有效值。
+	AdaptiveDynamicStreamingTask *MediaProcessTaskAdaptiveDynamicStreamingResultForDY `json:"AdaptiveDynamicStreamingTask,omitempty" name:"AdaptiveDynamicStreamingTask"`
+}
+
+type MediaProcessTaskSampleSnapshotResultForDY struct {
+
+	// 任务状态，有 PROCESSING，SUCCESS 和 FAIL 三种。
+	Status *string `json:"Status,omitempty" name:"Status"`
+
+	// 错误码，空字符串表示成功，其他值表示失败，取值请参考 [视频处理类错误码](https://cloud.tencent.com/document/product/862/50369#.E8.A7.86.E9.A2.91.E5.A4.84.E7.90.86.E7.B1.BB.E9.94.99.E8.AF.AF.E7.A0.81) 列表。
+	ErrCodeExt *string `json:"ErrCodeExt,omitempty" name:"ErrCodeExt"`
+
+	// 错误码，0 表示成功，其他值表示失败（该字段已不推荐使用，建议使用新的错误码字段 ErrCodeExt）。
+	ErrCode *int64 `json:"ErrCode,omitempty" name:"ErrCode"`
+
+	// 错误信息。
+	Message *string `json:"Message,omitempty" name:"Message"`
+
+	// 对视频做采样截图任务输入。
+	Input *SampleSnapshotTaskInputForDY `json:"Input,omitempty" name:"Input"`
+
+	// 对视频做采样截图任务输出。
+	// 注意：此字段可能返回 null，表示取不到有效值。
+	Output *MediaSampleSnapshotItemForDY `json:"Output,omitempty" name:"Output"`
+}
+
+type MediaProcessTaskSnapshotByTimeOffsetResultForDY struct {
+
+	// 任务状态，有 PROCESSING，SUCCESS 和 FAIL 三种。
+	Status *string `json:"Status,omitempty" name:"Status"`
+
+	// 错误码，空字符串表示成功，其他值表示失败，取值请参考 [视频处理类错误码](https://cloud.tencent.com/document/product/862/50369#.E8.A7.86.E9.A2.91.E5.A4.84.E7.90.86.E7.B1.BB.E9.94.99.E8.AF.AF.E7.A0.81) 列表。
+	ErrCodeExt *string `json:"ErrCodeExt,omitempty" name:"ErrCodeExt"`
+
+	// 错误码，0 表示成功，其他值表示失败（该字段已不推荐使用，建议使用新的错误码字段 ErrCodeExt）。
+	ErrCode *int64 `json:"ErrCode,omitempty" name:"ErrCode"`
+
+	// 错误信息。
+	Message *string `json:"Message,omitempty" name:"Message"`
+
+	// 对视频按指定时间点截图任务输入。
+	Input *SnapshotByTimeOffsetTaskInputForDY `json:"Input,omitempty" name:"Input"`
+
+	// 对视频按指定时间点截图任务输出。
+	// 注意：此字段可能返回 null，表示取不到有效值。
+	Output *MediaSnapshotByTimeOffsetItemForDY `json:"Output,omitempty" name:"Output"`
+}
+
+type MediaProcessTaskTranscodeResultForDY struct {
+
+	// 任务状态，有 PROCESSING，SUCCESS 和 FAIL 三种。
+	Status *string `json:"Status,omitempty" name:"Status"`
+
+	// 错误码，空字符串表示成功，其他值表示失败，取值请参考 [视频处理类错误码](https://cloud.tencent.com/document/product/862/50369#.E8.A7.86.E9.A2.91.E5.A4.84.E7.90.86.E7.B1.BB.E9.94.99.E8.AF.AF.E7.A0.81) 列表。
+	ErrCodeExt *string `json:"ErrCodeExt,omitempty" name:"ErrCodeExt"`
+
+	// 错误码，0 表示成功，其他值表示失败（该字段已不推荐使用，建议使用新的错误码字段 ErrCodeExt）。
+	ErrCode *int64 `json:"ErrCode,omitempty" name:"ErrCode"`
+
+	// 错误信息。
+	Message *string `json:"Message,omitempty" name:"Message"`
+
+	// 转码任务的输入。
+	Input *TranscodeTaskInputForDY `json:"Input,omitempty" name:"Input"`
+
+	// 转码任务的输出。
+	// 注意：此字段可能返回 null，表示取不到有效值。
+	Output *MediaTranscodeItemForDY `json:"Output,omitempty" name:"Output"`
+}
+
+type MediaSampleSnapshotItemForDY struct {
+
+	// 采样截图规格 ID，参见[采样截图参数模板](https://cloud.tencent.com/document/product/266/33480#.E9.87.87.E6.A0.B7.E6.88.AA.E5.9B.BE.E6.A8.A1.E6.9D.BF)。
+	Definition *int64 `json:"Definition,omitempty" name:"Definition"`
+
+	// 采样方式，取值范围：
+	// <li>Percent：根据百分比间隔采样。</li>
+	// <li>Time：根据时间间隔采样。</li>
+	SampleType *string `json:"SampleType,omitempty" name:"SampleType"`
+
+	// 采样间隔
+	// <li>当 SampleType 为 Percent 时，该值表示多少百分比一张图。</li>
+	// <li>当 SampleType 为 Time 时，该值表示多少时间间隔一张图，单位秒， 第一张图均为视频首帧。</li>
+	Interval *int64 `json:"Interval,omitempty" name:"Interval"`
+
+	// 截图后文件的存储位置。
+	Storage *TaskOutputStorageForDY `json:"Storage,omitempty" name:"Storage"`
+
+	// 生成的截图 path 列表。
+	ImagePathSet []*string `json:"ImagePathSet,omitempty" name:"ImagePathSet"`
+
+	// 截图如果被打上了水印，被打水印的模板 ID 列表。
+	WaterMarkDefinition []*int64 `json:"WaterMarkDefinition,omitempty" name:"WaterMarkDefinition"`
+}
+
+type MediaSnapshotByTimeOffsetItemForDY struct {
+
+	// 指定时间点截图规格，参见[指定时间点截图参数模板](https://cloud.tencent.com/document/product/266/33480#.E6.97.B6.E9.97.B4.E7.82.B9.E6.88.AA.E5.9B.BE.E6.A8.A1.E6.9D.BF)。
+	Definition *int64 `json:"Definition,omitempty" name:"Definition"`
+
+	// 同一规格的截图信息集合，每个元素代表一张截图。
+	PicInfoSet []*MediaSnapshotByTimePicInfoItemForDY `json:"PicInfoSet,omitempty" name:"PicInfoSet"`
+
+	// 指定时间点截图文件的存储位置。
+	Storage *TaskOutputStorageForDY `json:"Storage,omitempty" name:"Storage"`
+}
+
+type MediaSnapshotByTimePicInfoItemForDY struct {
+
+	// 该张截图对应视频文件中的时间偏移，单位为<font color=red>毫秒</font>。
+	TimeOffset *float64 `json:"TimeOffset,omitempty" name:"TimeOffset"`
+
+	// 该张截图的路径。
+	Path *string `json:"Path,omitempty" name:"Path"`
+
+	// 截图如果被打上了水印，被打水印的模板 ID 列表。
+	WaterMarkDefinition []*int64 `json:"WaterMarkDefinition,omitempty" name:"WaterMarkDefinition"`
+}
+
+type MediaTranscodeItemForDY struct {
+
+	// 转码后文件的目标存储。
+	OutputStorage *TaskOutputStorageForDY `json:"OutputStorage,omitempty" name:"OutputStorage"`
+
+	// 转码后的视频文件路径。
+	Path *string `json:"Path,omitempty" name:"Path"`
+
+	// 转码规格 ID，参见[转码参数模板](https://cloud.tencent.com/document/product/862/37042)。
+	Definition *int64 `json:"Definition,omitempty" name:"Definition"`
+
+	// 视频流码率平均值与音频流码率平均值之和， 单位：bps。
+	Bitrate *int64 `json:"Bitrate,omitempty" name:"Bitrate"`
+
+	// 视频流高度的最大值，单位：px。
+	Height *int64 `json:"Height,omitempty" name:"Height"`
+
+	// 视频流宽度的最大值，单位：px。
+	Width *int64 `json:"Width,omitempty" name:"Width"`
+
+	// 媒体文件总大小（视频为 HLS 时，大小是 m3u8 和 ts 文件大小的总和），单位：字节。
+	Size *int64 `json:"Size,omitempty" name:"Size"`
+
+	// 视频时长，单位：秒。
+	Duration *float64 `json:"Duration,omitempty" name:"Duration"`
+
+	// 容器类型，例如 m4a，mp4 等。
+	Container *string `json:"Container,omitempty" name:"Container"`
+
+	// 视频的 md5 值。
+	Md5 *string `json:"Md5,omitempty" name:"Md5"`
+
+	// 音频流信息。
+	AudioStreamSet []*MediaAudioStreamItemForDY `json:"AudioStreamSet,omitempty" name:"AudioStreamSet"`
+
+	// 视频流信息。
+	VideoStreamSet []*MediaVideoStreamItemForDY `json:"VideoStreamSet,omitempty" name:"VideoStreamSet"`
+}
+
+type MediaVideoStreamItemForDY struct {
+
+	// 视频流的码率，单位：bps。
+	Bitrate *int64 `json:"Bitrate,omitempty" name:"Bitrate"`
+
+	// 视频流的高度，单位：px。
+	Height *int64 `json:"Height,omitempty" name:"Height"`
+
+	// 视频流的宽度，单位：px。
+	Width *int64 `json:"Width,omitempty" name:"Width"`
+
+	// 视频流的编码格式，例如 h264。
+	Codec *string `json:"Codec,omitempty" name:"Codec"`
+
+	// 帧率，单位：hz。
+	Fps *int64 `json:"Fps,omitempty" name:"Fps"`
 }
 
 type NumberFormatForDY struct {
@@ -607,4 +1182,32 @@ type WatermarkInputForDY struct {
 	// <li>当数值大于0时（假设为 n），表示水印持续到第 n 秒时消失；</li>
 	// <li>当数值小于0时（假设为 -n），表示水印持续到离画面结束 n 秒前消失。</li>
 	EndTimeOffset *float64 `json:"EndTimeOffset,omitempty" name:"EndTimeOffset"`
+}
+
+type WorkflowTaskForDY struct {
+
+	// 视频处理任务 ID。
+	TaskId *string `json:"TaskId,omitempty" name:"TaskId"`
+
+	// 任务流状态，取值：
+	// <li>PROCESSING：处理中；</li>
+	// <li>FINISH：已完成。</li>
+	Status *string `json:"Status,omitempty" name:"Status"`
+
+	// 已弃用，请使用各个具体任务的 ErrCode。
+	ErrCode *int64 `json:"ErrCode,omitempty" name:"ErrCode"`
+
+	// 已弃用，请使用各个具体任务的 Message。
+	Message *string `json:"Message,omitempty" name:"Message"`
+
+	// 视频处理的目标文件信息。
+	// 注意：此字段可能返回 null，表示取不到有效值。
+	InputInfo *MediaInputInfoForDY `json:"InputInfo,omitempty" name:"InputInfo"`
+
+	// 原始视频的元信息。
+	// 注意：此字段可能返回 null，表示取不到有效值。
+	MetaData *MediaMetaDataForDY `json:"MetaData,omitempty" name:"MetaData"`
+
+	// 视频处理任务的执行状态与结果。
+	MediaProcessResultSet []*MediaProcessTaskResultForDY `json:"MediaProcessResultSet,omitempty" name:"MediaProcessResultSet"`
 }

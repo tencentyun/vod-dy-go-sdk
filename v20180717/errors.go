@@ -47,6 +47,9 @@ const (
 	// SessionId 过长。
 	INVALIDPARAMETERVALUE_SESSIONIDTOOLONG = "InvalidParameterValue.SessionIdTooLong"
 
+	// 源文件错误。
+	INVALIDPARAMETERVALUE_SRCFILE = "InvalidParameterValue.SrcFile"
+
 	// 资源不存在。
 	RESOURCENOTFOUND = "ResourceNotFound"
 
