@@ -35,6 +35,9 @@ const (
 	// 参数错误：文件不支持解冻。
 	INVALIDPARAMETERVALUE_NOTRESTORABLE = "InvalidParameterValue.NotRestorable"
 
+	// 参数值错误：文件原存储类型异常。
+	INVALIDPARAMETERVALUE_ORIGINALSTORAGECLASS = "InvalidParameterValue.OriginalStorageClass"
+
 	// 参数错误：解冻天数错误。
 	INVALIDPARAMETERVALUE_RESTOREDAY = "InvalidParameterValue.RestoreDay"
 

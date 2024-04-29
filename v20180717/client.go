@@ -16,6 +16,7 @@ package v20180717
 
 import (
     "context"
+    "errors"
     "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
     tchttp "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/http"
     "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/profile"
@@ -48,6 +49,7 @@ func NewDeleteMediaForDYRequest() (request *DeleteMediaForDYRequest) {
     request = &DeleteMediaForDYRequest{
         BaseRequest: &tchttp.BaseRequest{},
     }
+    
     request.Init().WithApiInfo("vod", APIVersion, "DeleteMediaForDY")
     
     
@@ -57,8 +59,9 @@ func NewDeleteMediaForDYRequest() (request *DeleteMediaForDYRequest) {
 func NewDeleteMediaForDYResponse() (response *DeleteMediaForDYResponse) {
     response = &DeleteMediaForDYResponse{
         BaseResponse: &tchttp.BaseResponse{},
-    }
+    } 
     return
+
 }
 
 // DeleteMediaForDY
@@ -72,13 +75,7 @@ func NewDeleteMediaForDYResponse() (response *DeleteMediaForDYResponse) {
 //  RESOURCENOTFOUND = "ResourceNotFound"
 //  UNAUTHORIZEDOPERATION = "UnauthorizedOperation"
 func (c *Client) DeleteMediaForDY(request *DeleteMediaForDYRequest) (response *DeleteMediaForDYResponse, err error) {
-    if request == nil {
-        request = NewDeleteMediaForDYRequest()
-    }
-    
-    response = NewDeleteMediaForDYResponse()
-    err = c.Send(request, response)
-    return
+    return c.DeleteMediaForDYWithContext(context.Background(), request)
 }
 
 // DeleteMediaForDY
@@ -95,6 +92,11 @@ func (c *Client) DeleteMediaForDYWithContext(ctx context.Context, request *Delet
     if request == nil {
         request = NewDeleteMediaForDYRequest()
     }
+    
+    if c.GetCredential() == nil {
+        return nil, errors.New("DeleteMediaForDY require credential")
+    }
+
     request.SetContext(ctx)
     
     response = NewDeleteMediaForDYResponse()
@@ -106,6 +108,7 @@ func NewDescribeMediaMetaDataForDYRequest() (request *DescribeMediaMetaDataForDY
     request = &DescribeMediaMetaDataForDYRequest{
         BaseRequest: &tchttp.BaseRequest{},
     }
+    
     request.Init().WithApiInfo("vod", APIVersion, "DescribeMediaMetaDataForDY")
     
     
@@ -115,8 +118,9 @@ func NewDescribeMediaMetaDataForDYRequest() (request *DescribeMediaMetaDataForDY
 func NewDescribeMediaMetaDataForDYResponse() (response *DescribeMediaMetaDataForDYResponse) {
     response = &DescribeMediaMetaDataForDYResponse{
         BaseResponse: &tchttp.BaseResponse{},
-    }
+    } 
     return
+
 }
 
 // DescribeMediaMetaDataForDY
@@ -128,13 +132,7 @@ func NewDescribeMediaMetaDataForDYResponse() (response *DescribeMediaMetaDataFor
 //  INVALIDPARAMETER = "InvalidParameter"
 //  INVALIDPARAMETERVALUE_SRCFILE = "InvalidParameterValue.SrcFile"
 func (c *Client) DescribeMediaMetaDataForDY(request *DescribeMediaMetaDataForDYRequest) (response *DescribeMediaMetaDataForDYResponse, err error) {
-    if request == nil {
-        request = NewDescribeMediaMetaDataForDYRequest()
-    }
-    
-    response = NewDescribeMediaMetaDataForDYResponse()
-    err = c.Send(request, response)
-    return
+    return c.DescribeMediaMetaDataForDYWithContext(context.Background(), request)
 }
 
 // DescribeMediaMetaDataForDY
@@ -149,6 +147,11 @@ func (c *Client) DescribeMediaMetaDataForDYWithContext(ctx context.Context, requ
     if request == nil {
         request = NewDescribeMediaMetaDataForDYRequest()
     }
+    
+    if c.GetCredential() == nil {
+        return nil, errors.New("DescribeMediaMetaDataForDY require credential")
+    }
+
     request.SetContext(ctx)
     
     response = NewDescribeMediaMetaDataForDYResponse()
@@ -160,6 +163,7 @@ func NewDescribeTaskDetailForDYRequest() (request *DescribeTaskDetailForDYReques
     request = &DescribeTaskDetailForDYRequest{
         BaseRequest: &tchttp.BaseRequest{},
     }
+    
     request.Init().WithApiInfo("vod", APIVersion, "DescribeTaskDetailForDY")
     
     
@@ -169,8 +173,9 @@ func NewDescribeTaskDetailForDYRequest() (request *DescribeTaskDetailForDYReques
 func NewDescribeTaskDetailForDYResponse() (response *DescribeTaskDetailForDYResponse) {
     response = &DescribeTaskDetailForDYResponse{
         BaseResponse: &tchttp.BaseResponse{},
-    }
+    } 
     return
+
 }
 
 // DescribeTaskDetailForDY
@@ -183,13 +188,7 @@ func NewDescribeTaskDetailForDYResponse() (response *DescribeTaskDetailForDYResp
 //  RESOURCENOTFOUND = "ResourceNotFound"
 //  UNAUTHORIZEDOPERATION = "UnauthorizedOperation"
 func (c *Client) DescribeTaskDetailForDY(request *DescribeTaskDetailForDYRequest) (response *DescribeTaskDetailForDYResponse, err error) {
-    if request == nil {
-        request = NewDescribeTaskDetailForDYRequest()
-    }
-    
-    response = NewDescribeTaskDetailForDYResponse()
-    err = c.Send(request, response)
-    return
+    return c.DescribeTaskDetailForDYWithContext(context.Background(), request)
 }
 
 // DescribeTaskDetailForDY
@@ -205,6 +204,11 @@ func (c *Client) DescribeTaskDetailForDYWithContext(ctx context.Context, request
     if request == nil {
         request = NewDescribeTaskDetailForDYRequest()
     }
+    
+    if c.GetCredential() == nil {
+        return nil, errors.New("DescribeTaskDetailForDY require credential")
+    }
+
     request.SetContext(ctx)
     
     response = NewDescribeTaskDetailForDYResponse()
@@ -216,6 +220,7 @@ func NewEditMediaForDYRequest() (request *EditMediaForDYRequest) {
     request = &EditMediaForDYRequest{
         BaseRequest: &tchttp.BaseRequest{},
     }
+    
     request.Init().WithApiInfo("vod", APIVersion, "EditMediaForDY")
     
     
@@ -225,8 +230,9 @@ func NewEditMediaForDYRequest() (request *EditMediaForDYRequest) {
 func NewEditMediaForDYResponse() (response *EditMediaForDYResponse) {
     response = &EditMediaForDYResponse{
         BaseResponse: &tchttp.BaseResponse{},
-    }
+    } 
     return
+
 }
 
 // EditMediaForDY
@@ -244,13 +250,7 @@ func NewEditMediaForDYResponse() (response *EditMediaForDYResponse) {
 //  INTERNALERROR = "InternalError"
 //  INVALIDPARAMETER = "InvalidParameter"
 func (c *Client) EditMediaForDY(request *EditMediaForDYRequest) (response *EditMediaForDYResponse, err error) {
-    if request == nil {
-        request = NewEditMediaForDYRequest()
-    }
-    
-    response = NewEditMediaForDYResponse()
-    err = c.Send(request, response)
-    return
+    return c.EditMediaForDYWithContext(context.Background(), request)
 }
 
 // EditMediaForDY
@@ -271,6 +271,11 @@ func (c *Client) EditMediaForDYWithContext(ctx context.Context, request *EditMed
     if request == nil {
         request = NewEditMediaForDYRequest()
     }
+    
+    if c.GetCredential() == nil {
+        return nil, errors.New("EditMediaForDY require credential")
+    }
+
     request.SetContext(ctx)
     
     response = NewEditMediaForDYResponse()
@@ -282,6 +287,7 @@ func NewProcessMediaForDYRequest() (request *ProcessMediaForDYRequest) {
     request = &ProcessMediaForDYRequest{
         BaseRequest: &tchttp.BaseRequest{},
     }
+    
     request.Init().WithApiInfo("vod", APIVersion, "ProcessMediaForDY")
     
     
@@ -291,8 +297,9 @@ func NewProcessMediaForDYRequest() (request *ProcessMediaForDYRequest) {
 func NewProcessMediaForDYResponse() (response *ProcessMediaForDYResponse) {
     response = &ProcessMediaForDYResponse{
         BaseResponse: &tchttp.BaseResponse{},
-    }
+    } 
     return
+
 }
 
 // ProcessMediaForDY
@@ -323,13 +330,7 @@ func NewProcessMediaForDYResponse() (response *ProcessMediaForDYResponse) {
 //  INVALIDPARAMETERVALUE_SESSIONID = "InvalidParameterValue.SessionId"
 //  INVALIDPARAMETERVALUE_SESSIONIDTOOLONG = "InvalidParameterValue.SessionIdTooLong"
 func (c *Client) ProcessMediaForDY(request *ProcessMediaForDYRequest) (response *ProcessMediaForDYResponse, err error) {
-    if request == nil {
-        request = NewProcessMediaForDYRequest()
-    }
-    
-    response = NewProcessMediaForDYResponse()
-    err = c.Send(request, response)
-    return
+    return c.ProcessMediaForDYWithContext(context.Background(), request)
 }
 
 // ProcessMediaForDY
@@ -363,6 +364,11 @@ func (c *Client) ProcessMediaForDYWithContext(ctx context.Context, request *Proc
     if request == nil {
         request = NewProcessMediaForDYRequest()
     }
+    
+    if c.GetCredential() == nil {
+        return nil, errors.New("ProcessMediaForDY require credential")
+    }
+
     request.SetContext(ctx)
     
     response = NewProcessMediaForDYResponse()
@@ -374,6 +380,7 @@ func NewRestoreMediaForDYRequest() (request *RestoreMediaForDYRequest) {
     request = &RestoreMediaForDYRequest{
         BaseRequest: &tchttp.BaseRequest{},
     }
+    
     request.Init().WithApiInfo("vod", APIVersion, "RestoreMediaForDY")
     
     
@@ -383,8 +390,9 @@ func NewRestoreMediaForDYRequest() (request *RestoreMediaForDYRequest) {
 func NewRestoreMediaForDYResponse() (response *RestoreMediaForDYResponse) {
     response = &RestoreMediaForDYResponse{
         BaseResponse: &tchttp.BaseResponse{},
-    }
+    } 
     return
+
 }
 
 // RestoreMediaForDY
@@ -396,6 +404,7 @@ func NewRestoreMediaForDYResponse() (response *RestoreMediaForDYResponse) {
 //  INVALIDPARAMETER = "InvalidParameter"
 //  INVALIDPARAMETERVALUE = "InvalidParameterValue"
 //  INVALIDPARAMETERVALUE_NOTRESTORABLE = "InvalidParameterValue.NotRestorable"
+//  INVALIDPARAMETERVALUE_ORIGINALSTORAGECLASS = "InvalidParameterValue.OriginalStorageClass"
 //  INVALIDPARAMETERVALUE_RESTOREDAY = "InvalidParameterValue.RestoreDay"
 //  RESOURCENOTFOUND = "ResourceNotFound"
 //  RESOURCENOTFOUND_FILENOTEXIST = "ResourceNotFound.FileNotExist"
@@ -404,13 +413,7 @@ func NewRestoreMediaForDYResponse() (response *RestoreMediaForDYResponse) {
 //  UNKNOWNPARAMETER = "UnknownParameter"
 //  UNSUPPORTEDOPERATION = "UnsupportedOperation"
 func (c *Client) RestoreMediaForDY(request *RestoreMediaForDYRequest) (response *RestoreMediaForDYResponse, err error) {
-    if request == nil {
-        request = NewRestoreMediaForDYRequest()
-    }
-    
-    response = NewRestoreMediaForDYResponse()
-    err = c.Send(request, response)
-    return
+    return c.RestoreMediaForDYWithContext(context.Background(), request)
 }
 
 // RestoreMediaForDY
@@ -422,6 +425,7 @@ func (c *Client) RestoreMediaForDY(request *RestoreMediaForDYRequest) (response 
 //  INVALIDPARAMETER = "InvalidParameter"
 //  INVALIDPARAMETERVALUE = "InvalidParameterValue"
 //  INVALIDPARAMETERVALUE_NOTRESTORABLE = "InvalidParameterValue.NotRestorable"
+//  INVALIDPARAMETERVALUE_ORIGINALSTORAGECLASS = "InvalidParameterValue.OriginalStorageClass"
 //  INVALIDPARAMETERVALUE_RESTOREDAY = "InvalidParameterValue.RestoreDay"
 //  RESOURCENOTFOUND = "ResourceNotFound"
 //  RESOURCENOTFOUND_FILENOTEXIST = "ResourceNotFound.FileNotExist"
@@ -433,6 +437,11 @@ func (c *Client) RestoreMediaForDYWithContext(ctx context.Context, request *Rest
     if request == nil {
         request = NewRestoreMediaForDYRequest()
     }
+    
+    if c.GetCredential() == nil {
+        return nil, errors.New("RestoreMediaForDY require credential")
+    }
+
     request.SetContext(ctx)
     
     response = NewRestoreMediaForDYResponse()
